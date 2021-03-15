@@ -13,9 +13,7 @@ from PIL import Image
 from .util import pillow_to_numpy
 
 data_path = {
-'omniglot': "/home/aparnami/Documents/GitHub/prototypical-noise/data/omniglot/data",
-'miniimagenet': "/home/aparnami/Documents/GitHub/prototypical-noise/data/miniimagenet/data/train",
-'faces':"/home/aparnami/Documents/GitHub/Facial-Similarity-with-Siamese-Networks-in-Pytorch/data/faces/training"        
+'faces':"/Users/aycanaslan/Dropbox/Uni:Learning/MA/test_dp_pixel/at&t"        
 }
 
 def choose_random_path(path):
@@ -36,39 +34,6 @@ class Dataset:
         image_paths = set([self.get_random_image() for i in range(n)])
         images = list(map(pillow_to_numpy, map(Image.open, image_paths)))
         return images
-
-
-class OmniglotDataset(Dataset):
-    def __init__(self):
-        self.data_dir = data_path['omniglot']
-        self.scale = (28,28)
-    
-    def get_random_image(self):
-        alphabet = choose_random_path(self.data_dir)
-        character = choose_random_path(alphabet)
-        image = choose_random_path(character)
-        return image
-    
-    def scale_up(self, image):
-        scaled = (1-image) * 255
-        return scaled
-    
-    def load_images(self, n=16):
-        images = super().load_images(n)
-        scaled = list(map(self.scale_up, images))
-        return scaled
-    
-    
-class MiniImageNetDataset(Dataset):
-    def __init__(self):
-        self.data_dir = data_path['miniimagenet']
-        self.scale = (84,84)
-    
-    def get_random_image(self):
-        label = choose_random_path(self.data_dir)
-        image = choose_random_path(label)
-        return image
-
 
 class FacesDataset(Dataset):
     def __init__(self):
